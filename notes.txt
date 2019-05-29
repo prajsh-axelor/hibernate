@@ -1,0 +1,44 @@
+CREATE TABLE student (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  first_name varchar(45) DEFAULT NULL,
+  last_name varchar(45) DEFAULT NULL,
+  email varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+alter table hb_student_tracker.student auto_increment=3000;
+
+truncate hb_student_tracker.student;
+
+
+//Quering the database using hibernate
+
+HQL hibernate query language
+
+List<Student> theStudents = session.createQuery("from Student").getResultList();
+
+List<Student> theStudentss = session.createQuery("from Student s where s.lastName='singh'").getResultList();
+
+List<Student> theStudentss = session.createQuery("from Student s where s.lastName='singh'"+"or s.firstName='prajjwal'").getResultList();
+
+List<Student> theStudentss = session.createQuery("from Student s where s.lastName='singh'"+"s.email LIKE '%gmail.com'").getResultList();
+
+//update objects using hibernate
+int studentId = 1;
+Student myStudent = session.get(Student.class, studentId);
+myStudent.setFirstName("Prajjwa");
+session.getTransaction().commit();
+
+//for updating all t
+session.createQuery("update Student set email='foo@gmail.com'").executeUpdate();
+
+//deleting the student
+int studentId = 1;
+Student myStudent = session.get(Student.class, studentId); //retriving the object
+
+session.delete(myStudent);
+
+session.getTransaction().commit();
+
+// deleting on the fly
+session.createQuery("delete from Student where id=12").executeUpdate();
